@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: var(--font-plex-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-space-grotesk), Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .cursor-ship-hover:hover {
+    cursor: url("/cursor-ship.svg") 12 12, pointer;
+  }
+
+  .hand-wave {
+    transform-origin: 70% 70%;
+  }
+
+  .hand-wave-group:hover .hand-wave {
+    animation: hand-wave 0.6s ease-in-out infinite alternate;
+  }
+
+  .bg-wave {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bg-wave::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(at 25% 20%, rgba(255, 255, 255, 0.08), transparent 52%),
+      radial-gradient(at 75% 80%, rgba(255, 255, 255, 0.07), transparent 58%),
+      radial-gradient(at 50% 50%, rgba(255, 255, 255, 0.04), transparent 65%),
+      linear-gradient(120deg, rgba(16, 16, 16, 0.88), rgba(5, 5, 5, 0.97));
+    background-repeat: no-repeat;
+    animation: wave-shift 16s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .bg-wave > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -12px, 0);
+  }
+}
+
+@keyframes window-ripple {
+  0% {
+    transform: scale(0.4);
+    opacity: 0.7;
+  }
+  60% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+@keyframes hand-wave {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(12deg);
+  }
+  100% {
+    transform: rotate(-6deg);
+  }
+}
+
+@keyframes wave-shift {
+  0% {
+    background-position: 0% 0%, 50% 60%, 40% 40%, 0% 0%;
+  }
+  50% {
+    background-position: 3% 4%, 48% 58%, 42% 42%, 0% 0%;
+  }
+  100% {
+    background-position: -3% -4%, 52% 62%, 38% 38%, 0% 0%;
+  }
+}
